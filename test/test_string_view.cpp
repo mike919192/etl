@@ -1120,5 +1120,32 @@ namespace
       CHECK_TRUE((u16view == U16View{ u"Hello World", etl::strlen(u"Hello World") }));
       CHECK_TRUE((u32view == U32View{ U"Hello World", etl::strlen(U"Hello World") }));
     }
+
+    //*************************************************************************
+#if ETL_USING_STL && ETL_USING_CPP20
+    TEST(test_string_view_formatter)
+    {
+      View view{ "Hello World" };
+      WView wview{ L"Hello World" };
+
+      std::string formatted = std::format("{}", view);
+      std::string truncated = std::format("{:.3}", view);
+
+      std::wstring wformatted = std::format(L"{}", wview);
+      std::wstring wtruncated = std::format(L"{:.3}", wview);
+
+      View formatted_view(formatted.data(), formatted.size());
+      View truncated_view(truncated.data(), truncated.size());
+
+      WView wformatted_view(wformatted.data(), wformatted.size());
+      WView wtruncated_view(wtruncated.data(), wtruncated.size());
+
+      CHECK(view == formatted_view);
+      CHECK(View(view).substr(0, 3) == truncated_view);
+
+      CHECK(wview == wformatted_view);
+      CHECK(WView(wview).substr(0, 3) == wtruncated_view);
+    }
+#endif
   };
 }

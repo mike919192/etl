@@ -56,6 +56,11 @@ SOFTWARE.
   #include <string_view>
 #endif
 
+#if ETL_USING_STL && ETL_USING_CPP20
+  #include <format>
+  #include <concepts>
+#endif
+
 #include "private/minmax_push.h"
 
 //*****************************************************************************
@@ -2965,6 +2970,28 @@ namespace etl
     return !(lhs < rhs);
   }
 }
+
+#if ETL_USING_STL && ETL_USING_CPP20
+
+template <std::derived_from<etl::ibasic_string<char>> T>
+struct std::formatter<T> : std::formatter<std::string_view> 
+{
+    auto format(const T &text, std::format_context &ctx) const
+    {
+        return std::formatter<std::string_view>::format(std::string_view(text.data(), text.size()), ctx);
+    }
+};
+
+template <std::derived_from<etl::ibasic_string<wchar_t>> T>
+struct std::formatter<T, wchar_t> : std::formatter<std::wstring_view, wchar_t> 
+{
+    auto format(const T &text, std::wformat_context &ctx) const
+    {
+        return std::formatter<std::wstring_view, wchar_t>::format(std::wstring_view(text.data(), text.size()), ctx);
+    }
+};
+
+#endif
 
 #include "private/minmax_pop.h"
 
