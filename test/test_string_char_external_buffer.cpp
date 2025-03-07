@@ -5689,5 +5689,23 @@ namespace
 #endif
       CHECK_EQUAL(text.max_size(), text.size());
     }
+    
+    //*************************************************************************
+#if ETL_USING_STL && ETL_USING_CPP20
+    TEST_FIXTURE(SetupFixture, test_format_etl_string)
+    {
+      TextBuffer buffer1{0};
+      Text text1(STR("Hello World"), buffer1.data(), buffer1.size());
+
+      TextSTD formatted = std::format(STR("{}"), text1);
+      TextSTD truncated = std::format(STR("{:.3}"), text1);
+      
+      View formatted_view(formatted.data(), formatted.size());
+      View truncated_view(truncated.data(), truncated.size());
+      
+      CHECK(text1 == formatted_view);
+      CHECK(View(text1.data(), 3) == truncated_view);
+    }
+#endif
   };
 }
