@@ -47,6 +47,10 @@ SOFTWARE.
   #include <string_view>
 #endif
 
+#if ETL_USING_STL && ETL_USING_CPP20
+  #include <format>
+#endif
+
 #include <stdint.h>
 
 namespace etl
@@ -971,6 +975,28 @@ void swap(etl::basic_string_view<T, etl::char_traits<T> >& lhs, etl::basic_strin
 {
   lhs.swap(rhs);
 }
+
+#if ETL_USING_STL && ETL_USING_CPP20
+
+template <>
+struct std::formatter<etl::string_view> : std::formatter<std::string_view> 
+{
+    auto format(const etl::string_view &text, std::format_context &ctx) const
+    {
+        return std::formatter<std::string_view>::format(std::string_view(text.data(), text.size()), ctx);
+    }
+};
+
+template <>
+struct std::formatter<etl::wstring_view, wchar_t> : std::formatter<std::wstring_view, wchar_t> 
+{
+    auto format(const etl::wstring_view &text, std::wformat_context &ctx) const
+    {
+        return std::formatter<std::wstring_view, wchar_t>::format(std::wstring_view(text.data(), text.size()), ctx);
+    }
+};
+
+#endif
 
 #include "private/minmax_pop.h"
 

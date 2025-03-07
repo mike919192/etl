@@ -5704,7 +5704,7 @@ namespace
       View truncated_view(truncated.data(), truncated.size());
       
       CHECK(text1 == formatted_view);
-      CHECK(View(text1.data(), 3) == truncated_view);
+      CHECK(View(text1).substr(0, 3) == truncated_view);
     }
 #endif
   };
