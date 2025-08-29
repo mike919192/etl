@@ -168,6 +168,8 @@ namespace etl
     //*************************************************************************
     ETL_NODISCARD ETL_CONSTEXPR reference front() const ETL_NOEXCEPT
     {
+      ETL_STATIC_ASSERT((Extent != etl::dynamic_extent) ? Extent > 0 : true, "Span is empty");
+
       return *pbegin;
     }
 
@@ -176,6 +178,8 @@ namespace etl
     //*************************************************************************
     ETL_NODISCARD ETL_CONSTEXPR reference back() const ETL_NOEXCEPT
     {
+      ETL_STATIC_ASSERT((Extent != etl::dynamic_extent) ? Extent > 0 : true, "Span is empty");
+      
       return *((pbegin + Extent) - 1);
     }
 
