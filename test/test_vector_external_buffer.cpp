@@ -268,8 +268,8 @@ namespace
       Data data(10, buffer1, SIZE);
       const Data constData(10, buffer1, SIZE);
 
-      CHECK_EQUAL(&data[10], data.end());
-      CHECK_EQUAL(&constData[10], constData.end());
+      CHECK_EQUAL(etl::next(data.begin(), 10), data.end());
+      CHECK_EQUAL(etl::next(constData.begin(), 10), constData.end());
     }
 
     //*************************************************************************

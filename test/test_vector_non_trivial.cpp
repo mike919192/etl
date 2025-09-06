@@ -364,8 +364,8 @@ namespace
       DataDC data(10);
       const DataDC constData(10);
 
-      CHECK_EQUAL(&data[10], data.end());
-      CHECK_EQUAL(&constData[10], constData.end());
+      CHECK_EQUAL(etl::next(data.begin(), 10), data.end());
+      CHECK_EQUAL(etl::next(constData.begin(), 10), constData.end());
     }
 
     //*************************************************************************

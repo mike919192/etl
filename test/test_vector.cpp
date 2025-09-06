@@ -276,8 +276,8 @@ namespace
       Data data(10);
       const Data constData(10);
 
-      CHECK_EQUAL(&data[10], data.end());
-      CHECK_EQUAL(&constData[10], constData.end());
+      CHECK_EQUAL(etl::next(data.begin(), 10), data.end());
+      CHECK_EQUAL(etl::next(constData.begin(), 10), constData.end());
     }
 
     //*************************************************************************
@@ -459,6 +459,8 @@ namespace
       {
         CHECK_EQUAL(data[i], compare_data[i]);
       }
+
+      CHECK_THROW(data[data.size()], etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
@@ -472,6 +474,8 @@ namespace
       {
         CHECK_EQUAL(data[i], compare_data[i]);
       }
+
+      CHECK_THROW(data[data.size()], etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
@@ -509,6 +513,9 @@ namespace
       Data data(initial_data.begin(), initial_data.end());
 
       CHECK(data.front() == compare_data.front());
+
+      Data emptyData;
+      CHECK_THROW(emptyData.front(), etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
@@ -518,6 +525,9 @@ namespace
       const Data data(initial_data.begin(), initial_data.end());
 
       CHECK(data.front() == compare_data.front());
+
+      Data emptyData;
+      CHECK_THROW(emptyData.front(), etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
@@ -527,6 +537,9 @@ namespace
       Data data(initial_data.begin(), initial_data.end());
 
       CHECK(data.back() == compare_data.back());
+
+      Data emptyData;
+      CHECK_THROW(emptyData.back(), etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
@@ -536,6 +549,9 @@ namespace
       const Data data(initial_data.begin(), initial_data.end());
 
       CHECK(data.back() == compare_data.back());
+
+      Data emptyData;
+      CHECK_THROW(emptyData.back(), etl::vector_out_of_bounds);
     }
 
 
@@ -776,6 +792,11 @@ namespace
 
         CHECK(is_equal);
       }
+
+      Data data;
+      data.assign(initial_data.begin(), initial_data.begin() + INITIAL_SIZE);
+      CHECK_THROW(data.insert(data.cbegin() - 1, INITIAL_VALUE), etl::vector_out_of_bounds);
+      CHECK_THROW(data.insert(data.cbegin() + INITIAL_SIZE + 1, INITIAL_VALUE), etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
@@ -803,6 +824,11 @@ namespace
 
         CHECK(is_equal);
       }
+
+      Data data;
+      data.assign(initial_data.begin(), initial_data.begin() + INITIAL_SIZE);
+      CHECK_THROW(data.emplace(data.cbegin() - 1, INITIAL_VALUE), etl::vector_out_of_bounds);
+      CHECK_THROW(data.emplace(data.cbegin() + INITIAL_SIZE + 1, INITIAL_VALUE), etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
