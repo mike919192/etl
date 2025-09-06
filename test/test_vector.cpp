@@ -876,6 +876,14 @@ namespace
     }
 
     //*************************************************************************
+    TEST(test_emplace_out_of_range)
+    {
+      etl::vector<int, SIZE> data;
+
+      CHECK_THROW(data.emplace(data.end() + 1);, etl::vector_out_of_bounds);
+    }
+
+    //*************************************************************************
     TEST(test_emplace_back_default)
     {
       const int Initial = 1;
@@ -970,6 +978,14 @@ namespace
     }
 
     //*************************************************************************
+    TEST_FIXTURE(SetupFixture, test_insert_position_n_value_outofbounds)
+    {
+      Data data;
+
+      CHECK_THROW(data.insert(data.end() + 1, 1, 0);, etl::vector_out_of_bounds);
+    }
+
+    //*************************************************************************
     TEST_FIXTURE(SetupFixture, test_insert_position_n_value_excess)
     {
       const size_t INITIAL_SIZE = SIZE;
@@ -1023,6 +1039,14 @@ namespace
     }
 
     //*************************************************************************
+    TEST_FIXTURE(SetupFixture, test_insert_position_range_out_of_bounds)
+    {
+      Data data;
+
+      CHECK_THROW(data.insert(data.end() + 1, insert_data.cbegin(), insert_data.cend());, etl::vector_out_of_bounds);
+    }
+
+    //*************************************************************************
     TEST_FIXTURE(SetupFixture, test_insert_position_range_excess)
     {
       const size_t INITIAL_SIZE = 5;
@@ -1073,6 +1097,14 @@ namespace
     }
 
     //*************************************************************************
+    TEST_FIXTURE(SetupFixture, test_erase_single_iterator_outofbounds)
+    {
+      Data data(initial_data.begin(), initial_data.end());
+
+      CHECK_THROW(data.erase(data.end() + 1);, etl::vector_out_of_bounds);
+    }
+
+    //*************************************************************************
     TEST_FIXTURE(SetupFixture, test_erase_single_const_iterator)
     {
       Compare_Data compare_data(initial_data.begin(), initial_data.end());
@@ -1098,6 +1130,14 @@ namespace
     }
 
     //*************************************************************************
+    TEST_FIXTURE(SetupFixture, test_erase_single_const_iterator_outofbounds)
+    {
+      Data data(initial_data.begin(), initial_data.end());
+
+      CHECK_THROW(data.erase(data.cend() + 1);, etl::vector_out_of_bounds);
+    }
+
+    //*************************************************************************
     TEST_FIXTURE(SetupFixture, test_erase_range)
     {
       Compare_Data compare_data(initial_data.begin(), initial_data.end());
@@ -1120,6 +1160,14 @@ namespace
                                 compare_data.begin());
 
       CHECK(is_equal);
+    }
+
+    //*************************************************************************
+    TEST_FIXTURE(SetupFixture, test_erase_range_outofbounds)
+    {
+      Data data(initial_data.begin(), initial_data.end());
+      
+      CHECK_THROW(data.erase(data.begin(), data.end() + 1);, etl::vector_out_of_bounds);
     }
 
     //*************************************************************************
