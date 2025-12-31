@@ -467,6 +467,35 @@ namespace etl
       return iterator(base_t::erase(base_t::const_iterator(first), base_t::const_iterator(last)));
     }
 
+    //*********************************************************************
+    /// Swap contents with another vector.  Performs operation on each individual element.
+    ///\param other The other vector to swap with.
+    //*********************************************************************
+    void swap(ivector<T*>& other)
+    {
+      ETL_ASSERT_OR_RETURN(this->max_size() >= other.size() && other.max_size() >= this->size(), ETL_ERROR(vector_full));
+      typename ivector<T*>::iterator this_itr = this->begin();
+      typename ivector<T*>::iterator other_itr = other.begin();
+      while (this_itr < this->end() && other_itr < other.end())
+      {
+        ETL_OR_STD::swap(*this_itr, *other_itr);
+        ++this_itr;
+        ++other_itr;
+      }
+      if (other.size() > this->size())
+      {
+        size_t min_size = this->size();
+        this->insert(this->end(), other_itr, other.end());
+        other.resize(min_size);
+      }
+      else if (this->size() > other.size())
+      {
+        size_t min_size = other.size();
+        other.insert(other.end(), this_itr, this->end());
+        this->resize(min_size);
+      }
+    }
+
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
@@ -888,6 +917,35 @@ namespace etl
     iterator erase(const_iterator first, const_iterator last)
     {
       return iterator(base_t::erase(base_t::iterator(first), base_t::iterator(last)));
+    }
+
+    //*********************************************************************
+    /// Swap contents with another vector.  Performs operation on each individual element.
+    ///\param other The other vector to swap with.
+    //*********************************************************************
+    void swap(ivector<const T*>& other)
+    {
+      ETL_ASSERT_OR_RETURN(this->max_size() >= other.size() && other.max_size() >= this->size(), ETL_ERROR(vector_full));
+      typename ivector<const T*>::iterator this_itr = this->begin();
+      typename ivector<const T*>::iterator other_itr = other.begin();
+      while (this_itr < this->end() && other_itr < other.end())
+      {
+        ETL_OR_STD::swap(*this_itr, *other_itr);
+        ++this_itr;
+        ++other_itr;
+      }
+      if (other.size() > this->size())
+      {
+        size_t min_size = this->size();
+        this->insert(this->end(), other_itr, other.end());
+        other.resize(min_size);
+      }
+      else if (this->size() > other.size())
+      {
+        size_t min_size = other.size();
+        other.insert(other.end(), this_itr, this->end());
+        this->resize(min_size);
+      }
     }
 
     //*************************************************************************

@@ -1628,7 +1628,7 @@ namespace
     }
 
     //*************************************************************************
-    TEST(swap_same_capacity)
+    TEST_FIXTURE(SetupFixture, swap_same_capacity)
     {
       Data etl_data(swap_data.begin(), swap_data.end());
       Data etl_data2(swap_other_data.begin(), swap_other_data.end());
@@ -1654,7 +1654,7 @@ namespace
     }
 
     //*************************************************************************
-    TEST(swap_different_capacity)
+    TEST_FIXTURE(SetupFixture, swap_different_capacity)
     {
       const size_t other_size = 6;
       Data etl_data(swap_data.begin(), swap_data.end());
