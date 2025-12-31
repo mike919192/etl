@@ -474,26 +474,29 @@ namespace etl
     void swap(ivector<T*>& other)
     {
       ETL_ASSERT_OR_RETURN(this->max_size() >= other.size() && other.max_size() >= this->size(), ETL_ERROR(vector_full));
-      typename ivector<T*>::iterator this_itr = this->begin();
-      typename ivector<T*>::iterator other_itr = other.begin();
-      while (this_itr < this->end() && other_itr < other.end())
+
+      ivector<T*>& smaller = other.size() > this->size() ? *this : other;
+      ivector<T*>& larger = other.size() > this->size() ? other : *this;
+
+      ivector<T*>::iterator smaller_itr = smaller.begin();
+      ivector<T*>::iterator larger_itr = larger.begin();
+      
+      while (smaller_itr < smaller.end())
       {
-        ETL_OR_STD::swap(*this_itr, *other_itr);
-        ++this_itr;
-        ++other_itr;
+        ETL_OR_STD::swap(*smaller_itr, *larger_itr);
+        ++smaller_itr;
+        ++larger_itr;
       }
-      if (other.size() > this->size())
+
+      size_t smaller_size = smaller.size();
+
+      while(larger_itr < larger.end())
       {
-        size_t min_size = this->size();
-        this->insert(this->end(), other_itr, other.end());
-        other.resize(min_size);
+        smaller.insert(smaller.end(), etl::move(*larger_itr));
+        ++larger_itr;
       }
-      else if (this->size() > other.size())
-      {
-        size_t min_size = other.size();
-        other.insert(other.end(), this_itr, this->end());
-        this->resize(min_size);
-      }
+
+      larger.resize(smaller_size);
     }
 
     //*************************************************************************
@@ -926,26 +929,29 @@ namespace etl
     void swap(ivector<const T*>& other)
     {
       ETL_ASSERT_OR_RETURN(this->max_size() >= other.size() && other.max_size() >= this->size(), ETL_ERROR(vector_full));
-      typename ivector<const T*>::iterator this_itr = this->begin();
-      typename ivector<const T*>::iterator other_itr = other.begin();
-      while (this_itr < this->end() && other_itr < other.end())
+
+      ivector<const T*>& smaller = other.size() > this->size() ? *this : other;
+      ivector<const T*>& larger = other.size() > this->size() ? other : *this;
+
+      ivector<const T*>::iterator smaller_itr = smaller.begin();
+      ivector<const T*>::iterator larger_itr = larger.begin();
+      
+      while (smaller_itr < smaller.end())
       {
-        ETL_OR_STD::swap(*this_itr, *other_itr);
-        ++this_itr;
-        ++other_itr;
+        ETL_OR_STD::swap(*smaller_itr, *larger_itr);
+        ++smaller_itr;
+        ++larger_itr;
       }
-      if (other.size() > this->size())
+
+      size_t smaller_size = smaller.size();
+
+      while(larger_itr < larger.end())
       {
-        size_t min_size = this->size();
-        this->insert(this->end(), other_itr, other.end());
-        other.resize(min_size);
+        smaller.insert(smaller.end(), etl::move(*larger_itr));
+        ++larger_itr;
       }
-      else if (this->size() > other.size())
-      {
-        size_t min_size = other.size();
-        other.insert(other.end(), this_itr, this->end());
-        this->resize(min_size);
-      }
+
+      larger.resize(smaller_size);
     }
 
     //*************************************************************************
