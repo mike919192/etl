@@ -1587,24 +1587,24 @@ namespace etl
     /// Instead swaps pointers to the external buffer.
     ///\param other The other vector to swap with.
     //*********************************************************************
-    void swap(vector_ext<T>& other)
-    {
-      ETL_OR_STD::swap(this->p_buffer, other.p_buffer);
-      ETL_OR_STD::swap(this->p_end, other.p_end);
-      ETL_OR_STD::swap(this->CAPACITY, other.CAPACITY);
-#if defined(ETL_DEBUG_COUNT)
-      this->etl_debug_count.swap(other.etl_debug_count);
-#endif
-    }
+//     void swap(vector_ext<T>& other)
+//     {
+//       ETL_OR_STD::swap(this->p_buffer, other.p_buffer);
+//       ETL_OR_STD::swap(this->p_end, other.p_end);
+//       ETL_OR_STD::swap(this->CAPACITY, other.CAPACITY);
+// #if defined(ETL_DEBUG_COUNT)
+//       this->etl_debug_count.swap(other.etl_debug_count);
+// #endif
+//     }
 
     //*********************************************************************
     /// Swap contents with another vector.  Performs operation on each individual element.
     ///\param other The other vector to swap with.
     //*********************************************************************
-    void swap(ivector<T>& other)
-    {
-      static_cast<ivector<T>*>(this)->swap(other);
-    }
+    // void swap(ivector<T>& other)
+    // {
+    //   static_cast<ivector<T>*>(this)->swap(other);
+    // }
   };
 
   //***************************************************************************
@@ -1893,24 +1893,24 @@ namespace etl
     /// Instead swaps pointers to the external buffer.
     ///\param other The other vector to swap with.
     //*********************************************************************
-    void swap(vector_ext<T*>& other)
-    {
-      ETL_OR_STD::swap(this->p_buffer, other.p_buffer);
-      ETL_OR_STD::swap(this->p_end, other.p_end);
-      ETL_OR_STD::swap(this->CAPACITY, other.CAPACITY);
-#if defined(ETL_DEBUG_COUNT)
-      this->etl_debug_count.swap(other.etl_debug_count);
-#endif
-    }
+//     void swap(vector_ext<T*>& other)
+//     {
+//       ETL_OR_STD::swap(this->p_buffer, other.p_buffer);
+//       ETL_OR_STD::swap(this->p_end, other.p_end);
+//       ETL_OR_STD::swap(this->CAPACITY, other.CAPACITY);
+// #if defined(ETL_DEBUG_COUNT)
+//       this->etl_debug_count.swap(other.etl_debug_count);
+// #endif
+//     }
 
     //*********************************************************************
     /// Swap contents with another vector.  Performs operation on each individual element.
     ///\param other The other vector to swap with.
     //*********************************************************************
-    void swap(ivector<T*>& other)
-    {
-      static_cast<ivector<T*>*>(this)->swap(other);
-    }
+    // void swap(ivector<T*>& other)
+    // {
+    //   static_cast<ivector<T*>*>(this)->swap(other);
+    // }
   };
 
   //***************************************************************************

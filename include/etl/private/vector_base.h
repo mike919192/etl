@@ -166,8 +166,7 @@ namespace etl
     {
     }
 #endif
-  protected:
-    size_type CAPACITY; ///<The maximum number of elements in the vector.
+    const size_type CAPACITY; ///<The maximum number of elements in the vector.
     ETL_DECLARE_DEBUG_COUNT;   ///< Internal debugging.
   };
 }
