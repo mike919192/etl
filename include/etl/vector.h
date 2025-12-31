@@ -977,7 +977,7 @@ namespace etl
 
       while(larger_itr < larger.end())
       {
-        smaller.insert(smaller.end(), etl::move(*larger_itr));
+        smaller.push_back(etl::move(*larger_itr));
         ++larger_itr;
       }
 
