@@ -973,7 +973,7 @@ namespace etl
         ++larger_itr;
       }
 
-      size_t smaller_size = smaller.size();
+      typename ivector<T>::iterator erase_start = larger_itr;
 
       while(larger_itr < larger.end())
       {
@@ -981,7 +981,7 @@ namespace etl
         ++larger_itr;
       }
 
-      larger.resize(smaller_size);
+      larger.erase(erase_start, larger.end());
     }
 
     //*************************************************************************

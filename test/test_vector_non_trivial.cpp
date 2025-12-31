@@ -62,8 +62,8 @@ namespace
     CompareDataNDC shorter_data;
     CompareDataNDC different_data;
     CompareDataNDC insert_data;
-    CompareDataDC swap_data;
-    CompareDataDC swap_other_data;
+    CompareDataNDC swap_data;
+    CompareDataNDC swap_other_data;
 
     //*************************************************************************
     struct SetupFixture
@@ -74,8 +74,8 @@ namespace
         NDC n_insert[]  = { NDC("11"), NDC("12"), NDC("13") };
         NDC n_less[]    = { NDC("0"), NDC("1"), NDC("2"), NDC("3"), NDC("3"), NDC("5"), NDC("6"), NDC("7"), NDC("8"), NDC("9") };
         NDC n_greater[] = { NDC("0"), NDC("1"), NDC("2"), NDC("4"), NDC("4"), NDC("5"), NDC("6"), NDC("7"), NDC("8"), NDC("9") };
-        DC n_swap[]    = { DC("0"), DC("1"), DC("2"), DC("4"), DC("4"), DC("5") };
-        DC n_swap_other[] = { DC("6"), DC("7"), DC("8"), DC("9") };
+        NDC n_swap[]    = { NDC("0"), NDC("1"), NDC("2"), NDC("4"), NDC("4"), NDC("5") };
+        NDC n_swap_other[] = { NDC("6"), NDC("7"), NDC("8"), NDC("9") };
 
         initial_data.assign(std::begin(n), std::end(n));
         insert_data.assign(std::begin(n_insert), std::end(n_insert));
@@ -1417,8 +1417,8 @@ namespace
     //*************************************************************************
     TEST_FIXTURE(SetupFixture, swap_same_capacity)
     {
-      DataDC etl_data(swap_data.begin(), swap_data.end());
-      DataDC etl_data2(swap_other_data.begin(), swap_other_data.end());
+      DataNDC etl_data(swap_data.begin(), swap_data.end());
+      DataNDC etl_data2(swap_other_data.begin(), swap_other_data.end());
 
       CHECK(std::equal(swap_data.begin(), swap_data.end(), etl_data.begin()));
       CHECK(etl_data.max_size() == SIZE);
@@ -1444,8 +1444,8 @@ namespace
     TEST_FIXTURE(SetupFixture, swap_different_capacity)
     {
       const size_t other_size = 6;
-      DataDC etl_data(swap_data.begin(), swap_data.end());
-      etl::vector<DC, other_size> etl_data2(swap_other_data.begin(), swap_other_data.end());
+      DataNDC etl_data(swap_data.begin(), swap_data.end());
+      etl::vector<NDC, other_size> etl_data2(swap_other_data.begin(), swap_other_data.end());
 
       CHECK(std::equal(swap_data.begin(), swap_data.end(), etl_data.begin()));
       CHECK(etl_data.max_size() == SIZE);
