@@ -953,13 +953,18 @@ namespace etl
     //*********************************************************************
     void swap(ivector<T>& other)
     {
+      if (this == &other)
+      {
+        return;
+      }
+
       ETL_ASSERT_OR_RETURN(this->max_size() >= other.size() && other.max_size() >= this->size(), ETL_ERROR(vector_full));
 
       ivector<T>& smaller = other.size() > this->size() ? *this : other;
       ivector<T>& larger = other.size() > this->size() ? other : *this;
 
-      ivector<T>::iterator smaller_itr = smaller.begin();
-      ivector<T>::iterator larger_itr = larger.begin();
+      typename ivector<T>::iterator smaller_itr = smaller.begin();
+      typename ivector<T>::iterator larger_itr = larger.begin();
       
       while (smaller_itr < smaller.end())
       {
