@@ -274,32 +274,41 @@ namespace
     }
 
     //*************************************************************************
-    TEST(test_format_string)
-    {
-      etl::string<100> s;
-      etl::string<10> sv = "data1";
-
-      CHECK_EQUAL("data1", test_format(s, "{}", sv));
-      CHECK_EQUAL("data1", test_format(s, "{:s}", sv));
-      CHECK_THROW(test_format(s, "{:d}", sv), etl::bad_format_string_exception);
-      CHECK_EQUAL("data1     ", test_format(s, "{:10s}", sv));
-      CHECK_EQUAL("data1     ", test_format(s, "{:<10s}", sv));
-      CHECK_EQUAL("     data1", test_format(s, "{:>10s}", sv));
-      CHECK_EQUAL("  data1   ", test_format(s, "{:^10s}", sv));
-      CHECK_EQUAL("data1", test_format(s, "{:3}", sv));
-      CHECK_EQUAL("dat", test_format(s, "{:.3s}", sv));
-      CHECK_EQUAL("dat", test_format(s, "{:^.3s}", sv));
-      CHECK_EQUAL(".  dat   !", test_format(s, ".{:^8.3s}!", sv));
-      CHECK_EQUAL("^dat     $", test_format(s, "^{:8.3s}$", sv));
-    }
-
-    //*************************************************************************
     TEST(test_format_string_view_escaped)
     {
       etl::string<100> s;
       etl::string_view sv("data1\n");
 
       CHECK_EQUAL("\"data1\\n\"", test_format(s, "{:?}", sv));
+    }
+
+    //*************************************************************************
+    TEST(test_format_string)
+    {
+      etl::string<100> s;
+      etl::string<10> s_arg = "data1";
+
+      CHECK_EQUAL("data1", test_format(s, "{}", s_arg));
+      CHECK_EQUAL("data1", test_format(s, "{:s}", s_arg));
+      CHECK_THROW(test_format(s, "{:d}", s_arg), etl::bad_format_string_exception);
+      CHECK_EQUAL("data1     ", test_format(s, "{:10s}", s_arg));
+      CHECK_EQUAL("data1     ", test_format(s, "{:<10s}", s_arg));
+      CHECK_EQUAL("     data1", test_format(s, "{:>10s}", s_arg));
+      CHECK_EQUAL("  data1   ", test_format(s, "{:^10s}", s_arg));
+      CHECK_EQUAL("data1", test_format(s, "{:3}", s_arg));
+      CHECK_EQUAL("dat", test_format(s, "{:.3s}", s_arg));
+      CHECK_EQUAL("dat", test_format(s, "{:^.3s}", s_arg));
+      CHECK_EQUAL(".  dat   !", test_format(s, ".{:^8.3s}!", s_arg));
+      CHECK_EQUAL("^dat     $", test_format(s, "^{:8.3s}$", s_arg));
+    }
+
+    //*************************************************************************
+    TEST(test_format_string_escaped)
+    {
+      etl::string<100> s;
+      etl::string<10> s_arg("data1\n");
+
+      CHECK_EQUAL("\"data1\\n\"", test_format(s, "{:?}", s_arg));
     }
 
     //*************************************************************************
