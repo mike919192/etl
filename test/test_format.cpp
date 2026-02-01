@@ -303,6 +303,39 @@ namespace
     }
 
     //*************************************************************************
+    //this minimal derived class of etl::string is used to prove that the 
+    //temporary lifetime is long enough for the format operation
+    template<size_t N>
+    class clearing_string : public etl::string<N>
+    {
+      public:
+      using etl::string<N>::string;
+      ~clearing_string()
+      {
+        this->clear();
+      }
+    };
+    TEST(test_format_string_temporary)
+    {
+      etl::string<100> s;
+      const char* data = "data1";
+      using string_t = clearing_string<10>;
+
+      CHECK_EQUAL("data1", test_format(s, "{}", string_t(data)));
+      CHECK_EQUAL("data1", test_format(s, "{:s}", string_t(data)));
+      CHECK_THROW(test_format(s, "{:d}", string_t(data)), etl::bad_format_string_exception);
+      CHECK_EQUAL("data1     ", test_format(s, "{:10s}", string_t(data)));
+      CHECK_EQUAL("data1     ", test_format(s, "{:<10s}", string_t(data)));
+      CHECK_EQUAL("     data1", test_format(s, "{:>10s}", string_t(data)));
+      CHECK_EQUAL("  data1   ", test_format(s, "{:^10s}", string_t(data)));
+      CHECK_EQUAL("data1", test_format(s, "{:3}", string_t(data)));
+      CHECK_EQUAL("dat", test_format(s, "{:.3s}", string_t(data)));
+      CHECK_EQUAL("dat", test_format(s, "{:^.3s}", string_t(data)));
+      CHECK_EQUAL(".  dat   !", test_format(s, ".{:^8.3s}!", string_t(data)));
+      CHECK_EQUAL("^dat     $", test_format(s, "^{:8.3s}$", string_t(data)));
+    }
+
+    //*************************************************************************
     TEST(test_format_string_escaped)
     {
       etl::string<100> s;
