@@ -44,8 +44,8 @@ SOFTWARE.
 #include <stdint.h>
 
 #if defined(ETL_IN_UNIT_TEST) && ETL_NOT_USING_STL
-  #define ETL_DISABLE_TIMER_UPDATES
-  #define ETL_ENABLE_TIMER_UPDATES
+  #define ETL_DISABLE_TIMER_UPDATES ((void)0)
+  #define ETL_ENABLE_TIMER_UPDATES  ((void)0)
   #define ETL_TIMER_UPDATES_ENABLED true
 
   #undef ETL_MESSAGE_TIMER_USE_ATOMIC_LOCK

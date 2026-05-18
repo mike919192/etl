@@ -38,7 +38,9 @@ SOFTWARE.
 #include "message_types.h"
 #include "vector.h"
 
-#include <stddef.h>
+#include "private/diagnostic_unnamed_type_template_args_push.h"
+
+#include <stdint.h>
 
 namespace etl
 {
@@ -429,5 +431,7 @@ namespace etl
     etl::vector<etl::imessage_router*, MAX_ROUTERS_> router_list;
   };
 } // namespace etl
+
+#include "private/diagnostic_pop.h"
 
 #endif

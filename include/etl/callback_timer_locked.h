@@ -696,7 +696,7 @@ namespace etl
     //*******************************************
     /// Handle the tick call
     //*******************************************
-    bool tick(uint32_t count) final
+    bool tick(uint32_t count) ETL_FINAL
     {
       if (enabled)
       {
