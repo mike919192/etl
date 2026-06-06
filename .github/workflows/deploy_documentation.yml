@@ -5,6 +5,8 @@ on:
     branches:
       - master
 
+    workflow_dispatch:
+
 jobs:
   build_deploy:
     name: build and deploy
@@ -28,7 +30,7 @@ jobs:
 
       # Deploys the site via the deploy script in the ci directory
       - name: Deploy
-        run: source $GITHUB_WORKSPACE/ci/deploy.sh
+        run: source $GITHUB_WORKSPACE/scripts/deploy_documentation.sh
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.DOCS_BDEPLOY_KEY }}
           SSH_USERNAME: ${{ secrets.DOCS_SSH_USER }}

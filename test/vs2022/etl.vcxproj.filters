@@ -223,6 +223,9 @@
     <Filter Include="Tests\Error Handler\Assert Function">
       <UniqueIdentifier>{f51cb264-5376-47db-89d9-a515e1ac4af7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{5b809d95-b37c-4011-af5e-b5ea6dcb354e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\etl\enum_type.h">
