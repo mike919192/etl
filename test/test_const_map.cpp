@@ -230,6 +230,21 @@ namespace
     //                          value_type{Key('K'), 10 } };
     //}
 
+    ////*************************************************************************
+    // Enable to check static_assert "Elements must be sorted"
+    ////*************************************************************************
+    TEST(test_constructor_unsorted_elements)
+    {
+      static const auto data = etl::const_map(value_type{Key('A'), 0 });
+      CHECK_TRUE(std::is_sorted(data.begin(), data.end()));
+
+      static const auto data2 = etl::make_const_map<value_type{Key('B'), 0 }, value_type{Key('C'), 1 }>();
+      CHECK_TRUE(std::is_sorted(data2.begin(), data2.end()));
+
+      static const auto data3 = etl::make_const_map_with_comparer<etl::less<Key>, value_type{Key('D'), 0 }, value_type{Key('E'), 1 }>();
+      CHECK_TRUE(std::is_sorted(data3.begin(), data3.end()));
+    }
+
 #if ETL_USING_CPP17
     //*************************************************************************
     TEST(test_cpp17_deduced_constructor)

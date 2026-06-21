@@ -517,6 +517,39 @@ namespace etl
     value_type element_list[Size];
   };
 
+  namespace private_const_map
+  {
+    // Base case: if there's only one element, it's sorted
+    template <typename TKeyCompare, auto first>
+    constexpr bool is_sorted() {
+      return true;
+    }
+
+    // Recursive template function
+    template <typename TKeyCompare, auto first, auto second, auto... rest>
+    constexpr bool is_sorted() {
+      return TKeyCompare()(first.first, second.first) && is_sorted<TKeyCompare, second, rest...>();
+    }
+  }
+
+  template <auto first, auto... elements>
+  consteval auto make_const_map()
+  {
+    using compare_t = etl::less<decltype(first.first)>;
+    static_assert(private_const_map::is_sorted<compare_t, first, elements...>(), "Elements must be sorted");
+    return etl::const_map(first, elements...);
+  }
+
+  template <typename TKeyCompare, auto first, auto... elements>
+  consteval auto make_const_map_with_comparer()
+  {
+    using key_t = decltype(first.first);
+    using value_t = decltype(first.second);
+    constexpr size_t num_elements = sizeof...(elements) + 1U;
+    static_assert(private_const_map::is_sorted<TKeyCompare, first, elements...>(), "Elements must be sorted");
+    return etl::const_map<key_t, value_t, num_elements, TKeyCompare>(first, elements...);
+  }
+
   //*************************************************************************
   /// Template deduction guides.
   //*************************************************************************
