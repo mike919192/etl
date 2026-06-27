@@ -293,8 +293,8 @@ namespace
     TEST(test_cpp17_deduced_constructor)
     {
       static const etl::const_map   data{value_type{Key('A'), 0}, value_type{Key('B'), 1}, value_type{Key('C'), 2}, value_type{Key('D'), 3},
-                                         value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
-                                         value_type{Key('I'), 8}, value_type{Key('J'), 9}};
+                                       value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
+                                       value_type{Key('I'), 8}, value_type{Key('J'), 9}};
       etl::const_map<Key, int, 10U> check{value_type{Key('A'), 0}, value_type{Key('B'), 1}, value_type{Key('C'), 2}, value_type{Key('D'), 3},
                                           value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
                                           value_type{Key('I'), 8}, value_type{Key('J'), 9}};
