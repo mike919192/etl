@@ -533,19 +533,21 @@ namespace etl
   {
     // Base case: if there's only one element, it's sorted
     template <typename TKeyCompare, auto First>
-    constexpr bool is_sorted() {
+    constexpr bool is_sorted()
+    {
       return true;
     }
 
     // Recursive template function
     template <typename TKeyCompare, auto First, auto Second, auto... Rest>
-    constexpr bool is_sorted() {
+    constexpr bool is_sorted()
+    {
       return TKeyCompare()(First.first, Second.first) && is_sorted<TKeyCompare, Second, Rest...>();
     }
-  }
+  } // namespace private_const_map
 
   template <auto First, auto... Elements>
-  consteval auto make_const_map()
+  constexpr auto make_const_map()
   {
     using compare_t = etl::less<decltype(First.first)>;
     static_assert(private_const_map::is_sorted<compare_t, First, Elements...>(), "Elements must be sorted");
@@ -553,10 +555,10 @@ namespace etl
   }
 
   template <typename TKeyCompare, auto First, auto... Elements>
-  consteval auto make_const_map_with_comparer()
+  constexpr auto make_const_map_with_comparer()
   {
-    using key_t = decltype(First.first);
-    using value_t = decltype(First.second);
+    using key_t                   = decltype(First.first);
+    using value_t                 = decltype(First.second);
     constexpr size_t num_elements = sizeof...(Elements) + 1U;
     static_assert(private_const_map::is_sorted<TKeyCompare, First, Elements...>(), "Elements must be sorted");
     return etl::const_map<key_t, value_t, num_elements, TKeyCompare>(First, Elements...);

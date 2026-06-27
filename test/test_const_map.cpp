@@ -242,20 +242,20 @@ namespace
     ////*************************************************************************
     // Enable to check static_assert "Elements must be sorted"
     ////*************************************************************************
-    //TEST(test_make_const_map_unsorted_elements)
+    // TEST(test_make_const_map_unsorted_elements)
     //{
-    //  static const auto data = etl::make_const_map<value_type{Key('B'), 0 }, value_type{Key('A'), 1 }>();
-    //  static const auto data2 = etl::make_const_map_with_comparer<etl::greater<Key>, value_type{Key('A'), 0 }, value_type{Key('B'), 1 }>();
-    //}
+    //   static const auto data = etl::make_const_map<value_type{Key('B'), 0 }, value_type{Key('A'), 1 }>();
+    //   static const auto data2 = etl::make_const_map_with_comparer<etl::greater<Key>, value_type{Key('A'), 0 }, value_type{Key('B'), 1 }>();
+    // }
 
     TEST(test_make_const_map)
     {
       static const auto data = etl::make_const_map<value_type{Key('A'), 0}, value_type{Key('B'), 1}, value_type{Key('C'), 2}, value_type{Key('D'), 3},
-                                       value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
-                                       value_type{Key('I'), 8}, value_type{Key('J'), 9}>();
+                                                   value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
+                                                   value_type{Key('I'), 8}, value_type{Key('J'), 9}>();
       etl::const_map<Key, int, Max_Size> check{value_type{Key('A'), 0}, value_type{Key('B'), 1}, value_type{Key('C'), 2}, value_type{Key('D'), 3},
-                                          value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
-                                          value_type{Key('I'), 8}, value_type{Key('J'), 9}};
+                                               value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
+                                               value_type{Key('I'), 8}, value_type{Key('J'), 9}};
 
       CHECK_TRUE(data.is_valid());
       CHECK_TRUE(data.size() == Max_Size);
@@ -269,12 +269,13 @@ namespace
 
     TEST(test_make_const_map_with_comparer)
     {
-      static const auto data = etl::make_const_map_with_comparer<etl::greater<Key>, value_type{Key('J'), 0}, value_type{Key('I'), 1}, value_type{Key('H'), 2}, value_type{Key('G'), 3},
-                                       value_type{Key('F'), 4}, value_type{Key('E'), 5}, value_type{Key('D'), 6}, value_type{Key('C'), 7},
-                                       value_type{Key('B'), 8}, value_type{Key('A'), 9}>();
-      etl::const_map<Key, int, Max_Size, etl::greater<Key>> check{value_type{Key('J'), 0}, value_type{Key('I'), 1}, value_type{Key('H'), 2}, value_type{Key('G'), 3},
-                                       value_type{Key('F'), 4}, value_type{Key('E'), 5}, value_type{Key('D'), 6}, value_type{Key('C'), 7},
-                                       value_type{Key('B'), 8}, value_type{Key('A'), 9}};
+      static const auto data =
+        etl::make_const_map_with_comparer<etl::greater<Key>, value_type{Key('J'), 0}, value_type{Key('I'), 1}, value_type{Key('H'), 2},
+                                          value_type{Key('G'), 3}, value_type{Key('F'), 4}, value_type{Key('E'), 5}, value_type{Key('D'), 6},
+                                          value_type{Key('C'), 7}, value_type{Key('B'), 8}, value_type{Key('A'), 9}>();
+      etl::const_map<Key, int, Max_Size, etl::greater<Key>> check{
+        value_type{Key('J'), 0}, value_type{Key('I'), 1}, value_type{Key('H'), 2}, value_type{Key('G'), 3}, value_type{Key('F'), 4},
+        value_type{Key('E'), 5}, value_type{Key('D'), 6}, value_type{Key('C'), 7}, value_type{Key('B'), 8}, value_type{Key('A'), 9}};
 
       CHECK_TRUE(data.is_valid());
       CHECK_TRUE(data.size() == Max_Size);
@@ -292,8 +293,8 @@ namespace
     TEST(test_cpp17_deduced_constructor)
     {
       static const etl::const_map   data{value_type{Key('A'), 0}, value_type{Key('B'), 1}, value_type{Key('C'), 2}, value_type{Key('D'), 3},
-                                       value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
-                                       value_type{Key('I'), 8}, value_type{Key('J'), 9}};
+                                         value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
+                                         value_type{Key('I'), 8}, value_type{Key('J'), 9}};
       etl::const_map<Key, int, 10U> check{value_type{Key('A'), 0}, value_type{Key('B'), 1}, value_type{Key('C'), 2}, value_type{Key('D'), 3},
                                           value_type{Key('E'), 4}, value_type{Key('F'), 5}, value_type{Key('G'), 6}, value_type{Key('H'), 7},
                                           value_type{Key('I'), 8}, value_type{Key('J'), 9}};
