@@ -153,7 +153,7 @@ namespace
 
 #if ETL_USING_CPP14
     //*************************************************************************
-    TEST(test_emplace_construction_cpp14)
+    TEST(test_in_place_construction_cpp14)
     {
       constexpr etl::optional<int> opt(etl::in_place_t{}, 1);
 
@@ -165,7 +165,7 @@ namespace
 
 #if ETL_USING_CPP20 && ETL_USING_STL
     //*************************************************************************
-    TEST(test_emplace_construction_cpp20)
+    TEST(test_in_place_construction_cpp20)
     {
       struct TestData
       {
@@ -255,12 +255,40 @@ namespace
     //*************************************************************************
     TEST(test_emplace_return)
     {
-      etl::optional<DataM> data;
+      // not fundamental
+      {
+        etl::optional<DataM> data;
 
-      DataM* datam = &data.emplace(1U);
-      CHECK_EQUAL(datam, &data.value());
-      CHECK(datam != nullptr);
+        DataM* datam_ptr = &data.emplace(1U);
+        CHECK_EQUAL(datam_ptr, &data.value());
+        CHECK(datam_ptr != nullptr);
+      }
+
+      // fundamental
+      {
+        etl::optional<int> data;
+
+        int* data_ptr = &data.emplace(1);
+        CHECK_EQUAL(data_ptr, &data.value());
+        CHECK(data_ptr != nullptr);
+      }
     }
+
+    //*************************************************************************
+#if !defined(ETL_FORCE_TEST_CPP03_IMPLEMENTATION)
+    TEST(test_emplace_initializer_list)
+    {
+      etl::optional<TestIL> data;
+
+      data.emplace({1, 2}, 10, 20, 30);
+      CHECK_TRUE(data.has_value());
+      CHECK_EQUAL(data->arr[0], 1);
+      CHECK_EQUAL(data->arr[1], 2);
+      CHECK_EQUAL(data->a, 10);
+      CHECK_EQUAL(data->b, 20);
+      CHECK_EQUAL(data->c, 30);
+    }
+#endif
 
     //*************************************************************************
     TEST(test_moveable_not_fundamental)
@@ -1120,11 +1148,11 @@ namespace
       CHECK_EQUAL(1, (*opt2)[0]);
       CHECK_EQUAL(20, (*opt2)[1]);
 
-      etl::optional<const ItemType> opt3;
+      etl::optional<etl::optional<const ItemType>> opt3;
       opt3.emplace(create_optional_issue_1171());
       CHECK_TRUE(opt3.has_value());
-      CHECK_EQUAL(1, (*opt3)[0]);
-      CHECK_EQUAL(20, (*opt3)[1]);
+      CHECK_EQUAL(1, (**opt3)[0]);
+      CHECK_EQUAL(20, (**opt3)[1]);
     }
 
     //*************************************************************************
@@ -1542,11 +1570,37 @@ namespace
 
       // make_optional #3
       {
-        static_assert(noexcept(etl::make_optional<NothrowAtAll>({1, 2, 3})), "make_optional<NothrowAtAll>(1,2,3) should be nothrow");
-        static_assert(noexcept(etl::make_optional<const NothrowAtAll>({1, 2, 3})), "make_optional<const NothrowAtAll>(1,2,3) should be nothrow");
+        static_assert(noexcept(etl::make_optional<NothrowAtAll>({1, 2, 3})), "make_optional<NothrowAtAll>({1,2,3}) should be nothrow");
+        static_assert(noexcept(etl::make_optional<const NothrowAtAll>({1, 2, 3})), "make_optional<const NothrowAtAll>({1,2,3}) should be nothrow");
         static_assert(!noexcept(etl::make_optional<ThrowingAll>({1, 2, 3})), "make_optional<ThrowingAll>({1,2,3}) should NOT be nothrow");
         static_assert(!noexcept(etl::make_optional<const ThrowingAll>({1, 2, 3})), "make_optional<const ThrowingAll>({1,2,3}) should NOT be nothrow");
       }
+    }
+
+    TEST(test_emplace_nothrow)
+    {
+      // emplace #1
+      {
+        etl::optional<int> fundamental{};
+        static_assert(noexcept(fundamental.emplace()), "optional<int>::emplace() should always be nothrow");
+
+        etl::optional<NothrowAtAll> nothrowAtAll{};
+        static_assert(noexcept(nothrowAtAll.emplace()), "optional<NothrowAtAll>::emplace() should be nothrow");
+
+        etl::optional<ThrowingAll> throwingAll{};
+        static_assert(!noexcept(throwingAll.emplace()), "optional<ThrowingAll>::emplace() should NOT be nothrow");
+      }
+
+      // emplace #2 (initializer_list)
+  #if !defined(ETL_FORCE_TEST_CPP03_IMPLEMENTATION)
+      {
+        etl::optional<NothrowAtAll> nothrowAtAll{};
+        static_assert(noexcept(nothrowAtAll.emplace({1, 2, 3})), "optional<NothrowAtAll>::emplace({1, 2, 3}) should be nothrow");
+
+        etl::optional<ThrowingAll> throwingAll{};
+        static_assert(!noexcept(throwingAll.emplace({1, 2, 3})), "optional<ThrowingAll>::emplace({1, 2, 3}) should NOT be nothrow");
+      }
+  #endif
     }
 #endif
   }
