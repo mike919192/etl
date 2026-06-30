@@ -7,6 +7,8 @@ Click on the links to see the original Github page.
 
 ## 20.48.0
 
+**Pull requests:**  
+
 [#1375](https://github.com/ETLCPP/etl/pull/1375) Support for C++26
 [#1376](https://github.com/ETLCPP/etl/pull/1376) Run generator_test.py in CO checks
 [#1377](https://github.com/ETLCPP/etl/pull/1377) Add installed dependencies for docker, documentation
