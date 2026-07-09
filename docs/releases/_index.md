@@ -20,6 +20,7 @@ Click on the links to see the original Github page.
 [#1492](https://github.com/ETLCPP/etl/pull/1492) Allow `etl::vector` to store pointers to functions and member functions
 [#1494](https://github.com/ETLCPP/etl/pull/1494) Refactor `variant::emplace` to perfect forward args instead of copy/move construct
 [#1495](https://github.com/ETLCPP/etl/pull/1495) Separate bit order and endianness in `bit_stream.h`
+[#1496](https://github.com/ETLCPP/etl/pull/1496) Fix non-assignable alternatives in variant
 
 ## 20.48.0
 
