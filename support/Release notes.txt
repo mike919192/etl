@@ -12,6 +12,7 @@
 #1492 Allow etl::vector to store pointers to functions and member functions
 #1494 Refactor variant::emplace to perfect forward args instead of copy/move construct
 #1495 Separate bit order and endianness in bit_stream.h
+#1496 Fix non-assignable alternatives in variant
 
 ===============================================================================
 20.48.0

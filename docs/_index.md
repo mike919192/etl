@@ -46,7 +46,6 @@ type: hextra-home
   <div>
     <a href="https://www.etlcpp.com/sponsor.html"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor"></a>
   </div>
-
 </div>
 
 ## Version
