@@ -1,6 +1,7 @@
 ﻿===============================================================================
 20.48.1
 
+#1477 Fix for 1405: etl::exchange doesn't work with unique_ptr
 #1484 Fix etl::message_timer firing following timers early on unregister
 #1485 Fix etl::histogram copy/move not preserving start_index
 #1486 Fix etl::bitset single-element from_string shift on empty string

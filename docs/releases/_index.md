@@ -9,6 +9,7 @@ Click on the links to see the original Github page.
 
 **Pull requests:**  
 
+[#1477](https://github.com/ETLCPP/etl/pull/1477) Fix for 1405: etl::exchange doesn't work with unique_ptr
 [#1484](https://github.com/ETLCPP/etl/pull/1484) Fix `etl::message_timer` firing following timers early on unregister
 [#1485](https://github.com/ETLCPP/etl/pull/1485) Fix `etl::histogram` copy/move not preserving start_index
 [#1486](https://github.com/ETLCPP/etl/pull/1486) Fix `etl::bitset` single-element `from_string` shift on empty string
