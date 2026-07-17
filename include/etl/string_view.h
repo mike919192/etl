@@ -428,7 +428,10 @@ namespace etl
     //*************************************************************************
     ETL_CONSTEXPR14 void remove_prefix(size_type n) ETL_NOEXCEPT
     {
-      mbegin += n;
+      if (n < size())
+        mbegin += n;
+      else
+        mbegin = mend;
     }
 
     //*************************************************************************
@@ -436,7 +439,10 @@ namespace etl
     //*************************************************************************
     ETL_CONSTEXPR14 void remove_suffix(size_type n) ETL_NOEXCEPT
     {
-      mend -= n;
+      if (n < size())
+        mend -= n;
+      else
+        mend = mbegin;
     }
 
     //*************************************************************************

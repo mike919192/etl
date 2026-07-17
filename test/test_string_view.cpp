@@ -543,6 +543,50 @@ namespace
     }
 
     //*************************************************************************
+    TEST(test_remove_prefix_to_empty)
+    {
+      std::string original = "Hello World";
+      {
+        View view(original.c_str());
+
+        // remove n == size() should result in an empty view
+        view.remove_prefix(original.size());
+        CHECK_EQUAL(view.begin(), view.end());
+        CHECK(view.empty());
+      }
+      {
+        View view(original.c_str());
+
+        // remove n > size() should result in an empty view
+        view.remove_prefix(original.size() + 1);
+        CHECK_EQUAL(view.begin(), view.end());
+        CHECK(view.empty());
+      }
+    }
+
+    //*************************************************************************
+    TEST(test_remove_suffix_to_empty)
+    {
+      std::string original = "Hello World";
+      {
+        View view(original.c_str());
+
+        // remove n == size() should result in an empty view
+        view.remove_suffix(original.size());
+        CHECK_EQUAL(view.begin(), view.end());
+        CHECK(view.empty());
+      }
+      {
+        View view(original.c_str());
+
+        // remove n > size() should result in an empty view
+        view.remove_suffix(original.size() + 1);
+        CHECK_EQUAL(view.begin(), view.end());
+        CHECK(view.empty());
+      }
+    }
+
+    //*************************************************************************
     TEST(test_copy)
     {
       View                 view(text.c_str());
