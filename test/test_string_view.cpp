@@ -543,47 +543,47 @@ namespace
     }
 
     //*************************************************************************
-    TEST(test_remove_prefix_to_empty)
+    TEST(test_remove_prefix_empty)
     {
       std::string original = "Hello World";
-      {
-        View view(original.c_str());
+      View        view(original.c_str());
 
-        // remove n == size() should result in an empty view
-        view.remove_prefix(original.size());
-        CHECK_EQUAL(view.begin(), view.end());
-        CHECK(view.empty());
-      }
-      {
-        View view(original.c_str());
-
-        // remove n > size() should result in an empty view
-        view.remove_prefix(original.size() + 1);
-        CHECK_EQUAL(view.begin(), view.end());
-        CHECK(view.empty());
-      }
+      // remove n == size() should result in an empty view
+      view.remove_prefix(original.size());
+      CHECK_EQUAL(view.begin(), view.end());
+      CHECK(view.empty());
     }
 
     //*************************************************************************
-    TEST(test_remove_suffix_to_empty)
+    TEST(test_remove_prefix_assert)
     {
       std::string original = "Hello World";
-      {
-        View view(original.c_str());
+      View        view(original.c_str());
 
-        // remove n == size() should result in an empty view
-        view.remove_suffix(original.size());
-        CHECK_EQUAL(view.begin(), view.end());
-        CHECK(view.empty());
-      }
-      {
-        View view(original.c_str());
+      // remove n > size() should trigger ETL_ASSERT
+      CHECK_THROW(view.remove_prefix(original.size() + 1), etl::string_view_bounds);
+    }
 
-        // remove n > size() should result in an empty view
-        view.remove_suffix(original.size() + 1);
-        CHECK_EQUAL(view.begin(), view.end());
-        CHECK(view.empty());
-      }
+    //*************************************************************************
+    TEST(test_remove_suffix_empty)
+    {
+      std::string original = "Hello World";
+      View        view(original.c_str());
+
+      // remove n == size() should result in an empty view
+      view.remove_suffix(original.size());
+      CHECK_EQUAL(view.begin(), view.end());
+      CHECK(view.empty());
+    }
+
+    //*************************************************************************
+    TEST(test_remove_suffix_assert)
+    {
+      std::string original = "Hello World";
+      View        view(original.c_str());
+
+      // remove n > size() should trigger ETL_ASSERT
+      CHECK_THROW(view.remove_suffix(original.size() + 1), etl::string_view_bounds);
     }
 
     //*************************************************************************

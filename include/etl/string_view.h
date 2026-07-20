@@ -427,8 +427,9 @@ namespace etl
     /// Shrinks the view by moving its start forward.
     /// When n >= size(), the view is set to empty.
     //*************************************************************************
-    ETL_CONSTEXPR14 void remove_prefix(size_type n) ETL_NOEXCEPT
+    ETL_CONSTEXPR14 void remove_prefix(size_type n) ETL_NOEXCEPT_IF(ETL_NOT_USING_EXCEPTIONS)
     {
+      ETL_ASSERT(n <= size(), ETL_ERROR(string_view_bounds));
       if (n < size())
         mbegin += n;
       else
@@ -439,8 +440,9 @@ namespace etl
     /// Shrinks the view by moving its end backward.
     /// When n >= size(), the view is set to empty.
     //*************************************************************************
-    ETL_CONSTEXPR14 void remove_suffix(size_type n) ETL_NOEXCEPT
+    ETL_CONSTEXPR14 void remove_suffix(size_type n) ETL_NOEXCEPT_IF(ETL_NOT_USING_EXCEPTIONS)
     {
+      ETL_ASSERT(n <= size(), ETL_ERROR(string_view_bounds));
       if (n < size())
         mend -= n;
       else
